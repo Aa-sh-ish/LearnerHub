@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const authConteroller = require('../controllers/authcontroller')
+const authConteroller = require('../authcontroller')
 
 router.post('/register',authConteroller.createUser)
 
