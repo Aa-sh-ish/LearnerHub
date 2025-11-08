@@ -2,11 +2,14 @@ const express = require('express')
 const dotenv = require('dotenv')
 const cors = require('cors')
 const mongoose =  require('mongoose')
+const http = require('http')
+const { Server } = require('socket.io');
+const jwt  = require('jsonwebtoken')
 const app = express()
 const port = 6000
 
 const authRouter = require('./routers/auth')
-
+const admin = require("./routers/superAdminRequests")
 
 dotenv.config();
 console.log(`from env ${process.env.PORT}`)
@@ -20,10 +23,10 @@ app.use(
   })
 );
 app.use(express.json());
+app.use("/api/super-admin", admin);
 app.use('/api',authRouter);
 app.use("/hello", (req, res)=>{
     res.send("Hello")
 });
-
 
 app.listen(process.env.PORT||port, () => console.log(`foodly backend listening on port ${process.env.PORT||port}!`));

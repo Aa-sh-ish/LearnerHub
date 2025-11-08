@@ -24,6 +24,22 @@ const UserSchema = new mongoose.Schema({
     parentEmail: {
         type: String,
         required: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isSuperAdmin: {
+      type: Boolean,
+      default: false
+    },
+    adminRequest: {
+        type: Boolean, 
+        default: false 
+    },
+    adminApproved: {
+        type: Boolean, 
+        default: false 
     }
 },
 {timestamps:true});

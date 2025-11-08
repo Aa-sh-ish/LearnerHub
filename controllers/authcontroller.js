@@ -30,6 +30,10 @@ const  createUser= async (req, res) => {
         parentEmail: user.parentEmail,
         dob: user.dob,
         phone: user.phone,
+        isSuperAdmin: user.isSuperAdmin || false,
+        isAdmin: user.isAdmin || false,
+        adminRequest: user.adminRequest || false,
+        adminApproved: user.adminApproved || false
       });
 
       // ✅ Save user
@@ -86,6 +90,10 @@ const  createUser= async (req, res) => {
             parentEmail: user.parentEmail,
             phone: user.phone,
             parentEmail: user.parentEmail,
+            isAdmin: user.isAdmin || false,
+            isSuperAdmin: user.isSuperAdmin || false,
+            adminRequest: user.adminRequest || false,
+            adminApproved: user.adminApproved || false
               },
         process.env.JWT_SECRET,{ expiresIn: '21d' } // token valid for 21 days
       );
