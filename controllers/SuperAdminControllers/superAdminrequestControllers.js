@@ -21,51 +21,80 @@ const getAdminRequests = async (req, res) => {
   }
 };
 
-const approveAdminRequest = async (req, res) => {
+const manageAdminRequest = async (req, res) => {
   try {
     const userId = req.params.id;
-    const superAdminId = req.user.id; // assuming JWT middleware sets req.user
+    const superAdminId = req.user.id;
+    const { approve } = req.body;
 
+    if (approve === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide 'approve' boolean value (true or false)"
+      });
+    }
 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({
         success: false,
-        message: "No user found with the requested ID"
+        message: "Invalid user ID"
       });
     }
 
     const superAdmin = await User.findById(superAdminId);
     if (!superAdmin || !superAdmin.isSuperAdmin) {
-      return res.status(403).json({ success: false, message: " You are Not Authorized for approving admin requests" });
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to perform this action"
+      });
     }
 
     const user = await User.findById(userId);
     if (!user || !user.adminRequest) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-         message: "Admin request not found"
-         });
+        message: "Admin request not found"
+      });
     }
 
-    user.isAdmin = true;
-    user.adminApproved = true;
-    user.adminRequest = false;
-    await user.save();
+    if (approve) {
+      // APPROVE
+      user.isAdmin = true;
+      user.adminApproved = true;
+      user.adminRequest = false;
 
-    res.status(200).json({
-      success: true,
-      message: `Admin request approved for ${user.username}`,
-      data: user
-    });
+      await user.save();
+
+      return res.status(200).json({
+        success: true,
+        message: `Admin request approved for ${user.username}`,
+        data: user
+      });
+    } else {
+      // REJECT
+      user.isAdmin = false;
+      user.adminApproved = false;
+      user.adminRequest = false;
+
+      await user.save();
+
+      return res.status(200).json({
+        success: true,
+        message: `Admin request rejected for ${user.username}`,
+        data: user
+      });
+    }
+
   } catch (err) {
-    res.status(500).json({ 
-        success: false,
-        message: err.message 
+    return res.status(500).json({
+      success: false,
+      message: err.message
     });
   }
 };
 
+
 module.exports = {
   getAdminRequests,
-  approveAdminRequest
+  manageAdminRequest
 };
