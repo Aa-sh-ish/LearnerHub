@@ -10,6 +10,7 @@ const port = 6000
 
 const authRouter = require('./routers/auth')
 const admin = require("./routers/superAdminRequests")
+const courseRouter = require("./routers/courses")
 
 dotenv.config();
 console.log(`from env ${process.env.PORT}`)
@@ -25,6 +26,7 @@ app.use(
 app.use(express.json());
 app.use("/api/super-admin", admin);
 app.use('/api',authRouter);
+app.use("/api/courses", courseRouter);
 app.use("/hello", (req, res)=>{
     res.send("Hello")
 });

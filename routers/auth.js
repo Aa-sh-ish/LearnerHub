@@ -8,6 +8,6 @@ router.post('/register',authConteroller.createUser)
 
 router.post('/login',authConteroller.LoginUser)
 
-router.get('/admin-requests', verifyToken, getAdminRequests.getAdminRequests);
+router.get('/admin-requests', verifyToken.verifyToken, getAdminRequests.getAdminRequests);
 
 module.exports = router;
