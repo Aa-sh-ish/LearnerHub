@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express.Router();
 const uploadToSupabaseBuffer = require("../controllers/Supabase/supabaseUpload");
 const Course = require("../Models/Course");
 const supabase  = require("../controllers/Supabase/SupabaseClient");

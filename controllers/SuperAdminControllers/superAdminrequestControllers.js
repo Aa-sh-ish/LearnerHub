@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const User = require('../../Models/user')
 
 const getAdminRequests = async (req, res) => {

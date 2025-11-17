@@ -1,7 +1,4 @@
 const supabase = require("./SupabaseClient");
-const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
-const path = require("path");
 
 async function uploadToSupabaseBuffer(buffer, originalName) {
   const filePath = `courses/${Date.now()}-${originalName}`;
