@@ -1,4 +1,4 @@
-const supabase = require("../Supabase/supabaseClient");
+const supabase = require("./supabaseClient");
 
 async function uploadToSupabaseBuffer(buffer, originalName) {
   const filePath = `courses/${Date.now()}-${originalName}`;
