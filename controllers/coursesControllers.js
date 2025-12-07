@@ -1,6 +1,6 @@
 const uploadToSupabaseBuffer = require("../controllers/Supabase/supabaseUpload");
 const Course = require("../Models/Course");
-const supabase  = require("../controllers/Supabase/SupabaseClient");
+const supabase  = require("../controllers/Supabase/supabaseClient");
 
 const createCourse = async (req, res) => {
   try {
